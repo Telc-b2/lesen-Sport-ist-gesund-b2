@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Lesen B2 Sport ist gesund Teil 1</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 1000px; margin: 30px auto; line-height: 1.6; background: #f4f4f4; color: #333; }
+h1 { text-align: center; color: #2c3e50; }
+.quiz-container { background: #FFE5B4; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+.question-text { margin-top: 10px; font-weight: bold; }
+button { display: block; margin: 5px 0; padding: 8px 12px; font-size: 14px; cursor: pointer; border-radius: 5px; border: none; background: #3498db; color: #fff; transition: 0.3s; text-align: right; white-space: pre-line; }
+button:hover:not(.disabled) { background: #2980b9; }
+button.disabled { background: #bdc3c7; cursor: default; }
+.correct { background-color: #2ecc71 !important; color: #fff !important; }
+.wrong { background-color: #e74c3c !important; color: #fff !important; }
+#show-result { margin-top: 20px; background: #2ecc71; color: #fff; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+#result-container { display: none; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>Lesen B2 - Sport ist gesund Teil 1</h1>
+
+<div id="quiz-area"></div>
+<button id="show-result">إظهار النتيجة والتصحيح</button>
+
+<div id="result-container">
+    <h2>نتيجتك</h2>
+    <p id="score"></p>
+</div>
+
+<script>
+const quiz = [
+    {
+        text: `An der Ostküste Attikas in Griechenland lag in der Antike der Orte Marathon.
+Dort siegte der griechische König Milthiades im Jahr 490 vor Christus über das Heer der Perser. Der Sage nach soll ein Soldat die 42,2 km lange Strecke nach Athen gerannt sein, um die Nachricht dieses für Griechenland wichtigen Sieges zu überbringen. Bei seiner Ankunft in Athen brach er, noch während er die Nachricht verkündete, vor Erschöpfung tot zusammen. Auf diese Legende geht eine sportliche Disziplin zurück: der Marathonlauf.
+Bereits seit 1896 ist er olympische Disziplin, seit 1984 auch für Frauen.
+Die Streckenlänge von 42195 m. wurde 1924 festgelegt. Der Marathonlauf gilt als einziger Leistungssport, der bis ins hohe Alter ausgeübt werden kann.
+Wissenschaftler erklären das mit der menschlichen Evolution. Der Mensch jagte in der Frühzeit seine Beute so lange vor sich her, bis diese vor Erschöpfung nicht mehr weiter konnte.
+Die Fähigkeit, ausdauernd über lange Strecken zu rennen, ist also in den menschlichen Genen verankert.`,
+        options: [
+            "a)Jugend forscht - auch auf dem Meer",
+            "b) Jugend engagiert sich für den Umweltschutz---Schülerwettbewerb. Umweltschutz",
+            "c)  Kochen für Eltern und Kinder",
+            "d) Mehr Gewalt auf Schulhöfen ",
+            "e)  Psychoterror an der Schule ",
+            "f)Schiffsreise für Jugendliche ",
+            "g) Starker Wettbewerb um Schüler",
+            "h) Von der Diät zur Krankheit---Mädchen abnehmen krankenhelten",
+            "i)  Wenn Lernen krank macht .",
+            "j) Wenn aus Erdbeeren Tomaten werden"
+        ],
+        answer: 7
+    },
+    {
+        text: `Schweizer Forscher haben herausgefunden, dass nur 6 Minuten Hochleistungstraining pro Woche
+- also weniger als eine Minute pro Tag - ausreichen, um den Körper fit zu halten. In einem Versuch mit mehreren Probanden nahm eine Gruppe an einem traditionellen Ausdauertraining teil, mit je ein bis zwei Trainingsstunden täglich. Die zweite Gruppe führte täglich 60 Sekunden dauernde Radsprints durch, wobei die Teilnehmer quasi aus dem Stand Höchstgeschwindigkeit erzielen mussten. Das Resultat war überraschend: Beide Gruppen zeigten die gleichen gesundheitlichen Verbesserungen. Die Muskel nahmen gleich viel Sauerstoff auf, und auch die Werte des für die Sauerstoffaufnahme verantwortlichen Zitratenzyms waren gleich. Sehr kurze und hochintensive sportliche Ubungen verbessern die Fitness genauso wie das zeitraubende traditionelle Ausdauertraining.`,
+        options: [
+           "a)Jugend forscht - auch auf dem Meer",
+            "b) Jugend engagiert sich für den Umweltschutz---Schülerwettbewerb. Umweltschutz",
+            "c)  Kochen für Eltern und Kinder",
+            "d) Mehr Gewalt auf Schulhöfen ",
+            "e)  Psychoterror an der Schule ",
+            "f)Schiffsreise für Jugendliche ",
+            "g) Starker Wettbewerb um Schüler",
+            "h) Von der Diät zur Krankheit---Mädchen abnehmen krankenhelten",
+            "i)  Wenn Lernen krank macht .",
+            "j) Wenn aus Erdbeeren Tomaten werden"
+        ],
+        answer: 5
+    },
+    {
+        text: `Viele frischgebackene Eltern stehen einem riesigen Angebot an Kinderwagen gegenüber, das in Kinderläden und Großmärkten feilgeboten wird. Doch welcher ist der richtige?
+Experten raten, beim Kauf dieses für die ersten Jahre mit dem Kleinkind wichtigen Gefährts auf ein paar Dinge zu achten. Erstens sollte die Matratze nicht zu weich sein, damit das Kind nicht einsinkt, wodurch die Atmung behindert werden kann. Zweitens sollten die Räder gefedert sein, um Erschütterungen auf unebenen Wegen auszugleichen.
+Ein hoher Wagen schützt die Babys vor dem Auspuff der Autos an Straßenkreuzungen.
+Zusammenklappbare Wagen passen in jeden Kofferraum und lassen sich fast überallhin mitnehmen. Der Wagen sollte vor allem kippsicher sein und keine scharfen Kanten haben, an denen sich die Kinder verletzen können. Vom TÜV geprüfte Kinderwagen erhalten ein Prüfzeichen. Damit haben die Eltern eine gewisse Sicherheit, dass der Kinderwagen auch nach Dauergebrauch nicht zu einem Sicherheitsrisiko für ihr Kind werden kann.`,
+        options: [
+           "a)Sport ist gesund - wenn man einige wichtige Regeln beachtet",
+            "b)  Griechische Sportler so erfolgreich wie nie zuvor",
+            "c) Fitness auch mit wenig Zeitaufwand erreichbar",
+            "d) Geprüfte Qualität für Babys ",
+            "e)  Bluthochdruck beschleunigt das flbnehmen ",
+            "f)Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei ",
+            "g) Täglich kurzes Sprints besser als langes Ausdauertraining",
+            "h)Ein Leistungssport für jedes Alter",
+            "i)  Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern",
+            "j) Autoindustrie: In Zukunft Mobilität ohne Grenzen"
+        ],
+        answer: 2
+    },
+    {
+        text: `13,5 Meter lang und leuchtend gelb - die "Aldebaran" zieht die Blicke im Jachthafen auf sich. Für drei Schüler aus Diepholz ist ein Traum wahr geworden. Als Meeresforscher auf See arbeiten sie an einem eigenen Forschungsprojekt. Sie nehmen am Meereswettbewerb "Forschen auf See" teil. Ziel des Projektes: junge Leute an wissenschaftlichen Arbeiten heranzuführen. Die drei Schüler Jonas, Annika und Katharina sind 17 Jahre alt. Ihr Thema: die Verschmutzung der Nordsee mit winzigen Plastikteilchen.
+Mit ihrer Forschungen wollen die Schüler die Aufmerksamkeit auf die Verschmutzung der Nordsee lenken. Zu Hause in Diepholz engagieren sich die drei in der Umwelt-Arbeitsgruppe ihrer Schule. Uber die Verschmutzung der Meere mit winzigen Plastikteilchen und die Gefahren für Fische und Meeressäuger wissen sie schon einiges.
+Mit ihren Untersuchungen wollen sie die Aufmerksamkeit auf das Problem lenken. Die Proben sind zwar noch nicht ausgewertet, die ersten Plastikteile haben die Jugendlichen aber schon gefunden. "Es sieht so aus, dass wir Ergebnisse kriegen, die gut für unser Projekt sind - aber nicht gut für die Umwelt".`,
+        options: [
+           "a)Jugend forscht - auch auf dem Meer",
+            "b) Jugend engagiert sich für den Umweltschutz---Schülerwettbewerb. Umweltschutz",
+            "c)  Kochen für Eltern und Kinder",
+            "d) Mehr Gewalt auf Schulhöfen ",
+            "e)  Psychoterror an der Schule ",
+            "f)Schiffsreise für Jugendliche ",
+            "g) Starker Wettbewerb um Schüler",
+            "h) Von der Diät zur Krankheit---Mädchen abnehmen krankenhelten",
+            "i)  Wenn Lernen krank macht .",
+            "j) Wenn aus Erdbeeren Tomaten werden"
+        ],
+        answer: 0
+    },
+    {
+        text: `Mobbing ist kein neues Phänomen. Es ist auch in Schulen weitverbreitet. Da spricht zum Beispiel eine Lehrerin vor der Klasse negativ über eine Schülerin, weil sie etwas nicht versteht oder immer wieder krank ist. Oder die Mitschüler lachen oder lassen beleidigende Bemerkungen fallen, wenn ein bestimmter Schüler sich zu Wort meldet. Da lauern Jungen einer 4. Klasse einem schüchternen Mitschüler auf dem Schulweg auf und erpressen von ihm Geld oder Kleidung. Häufig sind die Erwachsenen ratlos oder schauen weg, während die Opfer die Schuld bei sich selbst suchen und zunehmend in eine soziale Isolation geraten. Lehrkräfte sind meist überrascht, wenn man sie auf Mobbing in einer Klasse anspricht. Denn die Schikanen geschehen oft zu subtil und meist außerhalb des Unterrichts, während der Pausen oder auf dem Schulweg.`,
+        options: [
+           "a)Jugend forscht - auch auf dem Meer",
+            "b) Jugend engagiert sich für den Umweltschutz---Schülerwettbewerb. Umweltschutz",
+            "c)  Kochen für Eltern und Kinder",
+            "d) Mehr Gewalt auf Schulhöfen ",
+            "e)  Psychoterror an der Schule ",
+            "f)Schiffsreise für Jugendliche ",
+            "g) Starker Wettbewerb um Schüler",
+            "h) Von der Diät zur Krankheit---Mädchen abnehmen krankenhelten",
+            "i)  Wenn Lernen krank macht .",
+            "j) Wenn aus Erdbeeren Tomaten werden"
+        ],
+        answer: 3
+    }
+];
+
+const quizArea = document.getElementById("quiz-area");
+let userAnswers = Array(quiz.length).fill(null);
+
+quiz.forEach((teil, index) => {
+    const container = document.createElement("div");
+    container.className = "quiz-container";
+
+    const textEl = document.createElement("p");
+    textEl.innerText = teil.text;
+    container.appendChild(textEl);
+
+    teil.options.forEach((opt, oIndex) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = (e) => {
+            const allBtns = e.target.parentElement.querySelectorAll("button");
+            allBtns.forEach(b => {
+                b.classList.remove("disabled");
+                b.disabled = false;
+            });
+
+            userAnswers[index] = oIndex;
+            e.target.classList.add("disabled");
+            e.target.disabled = true;
+        };
+        container.appendChild(btn);
+    });
+
+    quizArea.appendChild(container);
+});
+
+document.getElementById("show-result").onclick = () => {
+    let score = 0;
+    quiz.forEach((teil, index) => {
+        const correct = teil.answer;
+        const selected = userAnswers[index];
+        const container = quizArea.children[index];
+        const buttons = container.querySelectorAll("button");
+
+        buttons.forEach((btn, oIndex) => {
+            btn.disabled = true;
+            if(oIndex === correct) btn.classList.add("correct");
+            if(selected === oIndex && selected !== correct) btn.classList.add("wrong");
+        });
+
+        if(selected === correct) score++;
+    });
+
+    document.getElementById("score").innerText = `النقاط: ${score*5} / 25`;
+    document.getElementById("result-container").style.display = "block";
+};
+</script>
+</body>
+</html>
+<h1>Lesen B2 -Der Ein-Personen-Karneval von Unna- Teil 2</h1>
+
+<div class="quiz-container">
+    <p>
+       Der Ein-Personen-Karneval von Unna
+Als Helmut Scherer vor genau 50 Jahren zum ersten Mal mit seinem Bollerwagen durch die westfälische Kleinstadt Unna zog, wurde er von den Leuten ausgelacht. Heute aber ist eher eine städtische Berühmtheit und sogar weit über die Grenzen seiner Heimatstadt hinaus bekannt.
+Der 71-Jährige ist der einzige Teilnehmer des weltweit kleinsten Karnevalsumzug. An Weiberfastnacht, dem letzten Donnerstag der Karnevalsperiode eines Jahres, zieht er mit seinem Handwagen los: Er selbst ist dann - dieses Jahr als blondes Schulmädchen - verkleidet und auf seinem Bollerwagen hat er aus Pappe und Gips Figuren aufgebaut, die humoristisch ein aktuelles gesellschaftliches Thema - diesmal die Schulreform - aufgreifen. So macht er sich nach alter karnevalistischer Tradition über Missstände lustig. Helmut Scherer leqt natürlich Wert darauf, dass er von Karnevalsmusik begleitet wird, die jedoch nicht von einer Musikgruppe, sondern von einem Radiorekorder gespielt wird.
+    </p>
+
+    <!-- سؤال 1 -->
+    <p class="question-text">1) Helmut Scherer</p>
+    <button data-correct="true">a) führt in Unna einen kleinen Karnevalsumzug durch.</button>
+    <button data-correct="false">b)ist in Unna seit 50 Jahren eine gefeierte Persönlichkeit</button>
+    <button data-correct="false">c)veranstalter den einzigen Karnevalsumzug der Welt.</button>
+
+     <!-- سؤال 1 -->
+    <p class="question-text">1 معدل) Helmut Scherer.</p>
+    <button data-correct="false">a) ist nur in Una eine Bekannte persönlich.</button>
+    <button data-correct="true">b)veranstaltet an krneval allinen einen Umzug</button>
+    <button data-correct="false">c) veranstalter den einzigen Karnevalsumzug der Welt.</button>
+
+    <!-- سؤال 2 -->
+    <p class="question-text">2)  Auf seinem Handwagen </p>
+    <button data-correct="false">a) fährt traditionell ein blondes Schulmädchen mit.</button>
+    <button data-correct="false">b) präsentiert er kleine Szenen, die auf den Alltag Bezug nehmen</button>
+    <button data-correct="true">c)  stellt er sozialkritische Themen auf witzige Art und Weise dar.</button>
+
+
+    <!-- سؤال 3 -->
+    <p class="question-text">3) Die Bevölkerung von Unna</p>
+    <button data-correct="true">a)hatte zunächst wenig Verständnis für Helmut Scherer.</button>
+    <button data-correct="false">b) hielt anfangs Helmut Scherer für kühl und nüchtern. </button>
+    <button data-correct="false">c)verhinderte Helmut Scherer ersten Karnevalsumzug</button>
+
+
+    <!-- سؤال 4 -->
+    <p class="question-text">4)Der kleinste Karnevalsumzug der Welt</p>
+    <button data-correct="false">a)hat Helmut Scherer sogar Geld eingebracht.</button>
+    <button data-correct="true">b) ist heute eine gute Reklame für die Stadt Unna.</button>
+    <button data-correct="false">c) wird in Zukunft von einer ganzen Gruppe von Leuten durchgeführt.</button>
+
+   <!-- سؤال 5 -->
+    <p class="question-text">5)  Helmut Scherer</p>
+    <button data-correct="true">a) hat an Karnevalsumzügen in mehreren Städten teilgenommen.</button>
+    <button data-correct="false">b)  hat inzwischen in ganz Deutschland Fan-Clubs.</button>
+    <button data-correct="false">c)sucht einen Nachfolger.</button>
+
+
+    <p class="feedback"></p>
+</div>
+
+<!-- زر النتيجة النهائية -->
+<div style="background:#fff;padding:20px;margin-top:20px;border-radius:8px;">
+    <button id="show-result-2">إظهار النتيجة النهائية للتمرين 2</button>
+    <p id="score-2" style="font-weight:bold;"></p>
+</div>
+
+<script>
+document.querySelectorAll(".quiz-container").forEach(container => {
+    container.querySelectorAll("button[data-correct]").forEach(btn => {
+        btn.onclick = () => {
+            const siblings = btn.parentElement.querySelectorAll("button[data-correct]");
+            siblings.forEach(s => s.classList.remove("selected"));
+            btn.classList.add("selected");
+        };
+    });
+});
+
+document.getElementById("show-result-2").onclick = function() {
+    const correctButtons = document.querySelectorAll('.quiz-container button[data-correct="true"]');
+    const allButtons = document.querySelectorAll('.quiz-container button[data-correct]');
+    let score = 0;
+
+    correctButtons.forEach(btn => {
+        if (btn.classList.contains("selected")) {
+            score++;
+        }
+    });
+
+    allButtons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.dataset.correct === "true") {
+            btn.style.backgroundColor = "lightgreen";
+        } else if (btn.classList.contains("selected") && btn.dataset.correct === "false") {
+            btn.style.backgroundColor = "#ff7f7f";
+        }
+    });
+
+    const total = correctButtons.length;
+    document.getElementById("score-2").textContent = `النقاط: ${score * 5} / ${total * 5}`;
+};
+</script>
+
+<div id="quiz-area-3"></div>
+</div>
+<body>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Teil 3</title>
+<style>
+body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; background-color: #f5f5f5; }
+h1 { text-align: center; margin-bottom: 20px; }
+.question { background-color: #ffe0b2; padding: 15px; margin-bottom: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.question p { margin-bottom: 10px; }
+.question label { display: block; margin-bottom: 5px; cursor: pointer; background-color: #fff; padding: 5px; border-radius: 3px; }
+.question label.selected { background-color: #ddd; }
+.question label.correct { background-color: #c8e6c9; }
+.question label.incorrect { background-color: #ffcdd2; }
+button { padding: 10px 20px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #2196F3; color: #fff; }
+button:hover { background-color: #1976D2; }
+#result-container { margin-top: 20px; padding: 15px; background-color: #fff; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: none; }
+</style>
+</head>
+<body>
+
+<h1> Teil 3</h1>
+
+<div id="quiz-area">
+
+<!-- Question 1 -->
+<div class="question" data-correct="5">
+  <h3>Text 1:Theater Marabu
+In Pollekes elfjährigem Leben scheint im Augenblick etwas falsch zu laufen.
+Es stört sie ja gar nicht, dass ihre Eltern geschieden sind. Sie hat ihren Papa sehr lieb, und sie hat eine prima Mama. Ihr Lehrer ist eigentlich auch ganz in Ordnung, aber muss der sich gleich in ihre Mama verlieben? Und dann ist Polleke sogar selbst schuld an allem. Aber sie gibt die Hoffnung nicht auf, dass am Ende doch alles gut wird, auch mit Mimun, dem liebsten Jungen auf der ganzen Erde und im ganzen Weltal. Datum: 01.1., Uhrzeit: 16.00 Uhr, Ort: Theaterwerkstatt, Alter: ab 9 Jahren</p>
+
+  <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 2 -->
+<div class="question" data-correct="6">
+<h3>Text 2:Rasmus und der Landstreicher
+Nach dem Kinderbuch von Astrid Lindgren Rasmus ist in einem Kinderheim aufgewachsen, er hat keine Eltern. Eines Tages läuft er davon und will sich Eltern suchen. Die erste Nacht schläft er in einer Scheune im Stroh, und am Morgen entdeckt er neben sich Oskar. Oskar ist ein Landstreicher, der keine Wohnung hat. Zuerst hat Rasmus Angst vor ihm, aber schon bald merkt er, dass Oskar ein prächtiger Mensch ist. Gemeinsam suchen sie Eltern für Rasmus. Doch als sie endlich prima Eltern gefunden haben, da wollen die beiden sich nicht mehr trennen. Datum: 6.1., Uhrzeit: 15.00 Uhr, Ort:
+Bürgerkino, Alter: ab 5 Jahren</p>
+
+  <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+<!-- Question 3 -->
+<div class="question" data-correct="0">
+<h3>Text 3:Claus von Wagner: Im Feld
+Die Verfilmung des Buches "Im Feld" handelt von einem jungen Mann, der bisher mit den Wölfen geheult hat. Er hat stets gemacht, was alle gemacht haben, und sich nach der Mehrheit gerichtet: Führerschein, Studium, Beruf, Freundin, iPod. In dieser Reihenfolge. Nun soll er plötzlich Vater werden.
+Doch der Antiheld ergreift die Flucht, um nachzudenken. Verfolgt von städtischen Beamten, der Polizei, den Reportern eines regionalen Hörfunksenders und seinen eigenen Ängsten, stürzt er sich in pointenreiche Analysen des Weltzustandes..
+Datum: 30.10. bis 01.11., Uhrzeit: 20.00 Uhr, Ort: Kinopolis</label>
+  <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+<!-- Question 4 -->
+<div class="question" data-correct="0">
+<h3>Text 4: Geschlossene Gesellschaft: Drama von Jean-Paul-Sartre
+Drei Personen, ein Mann und zwei Frauen, werden nach ihrem Tod in einem Zimmer eingesperrt, das keiner der drei jemals wieder verlassen und niemand anderes je betreten wird: Der Ort des Geschehens ist die Hölle. Alle drei sind sich bewusst, dass sie sich in der Hölle befinden, und machen sich auf das | Schlimmste gefasst, aber die erwartete Folter und die körperlichen Qualen stellen sich nicht ein, nur eine leichte Hitze ist zu verspüren. Tastend versuchen Sie, voneinander den Grund für die Höllenfahrt zu erfahren, ohne jedoch ihre eigene Schuld zu offenbaren. Datum: 01.11., Uhrzeit: 20.00 Uhr, Ort: Euro Theater Central</p>
+  <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 5 -->
+<div class="question" data-correct="1">
+<h3>Text 5:Beethovens Bonn
+Im Dezember 1770 erblickte Ludwig von Beethoven in der Bonngasse 20
+das Licht der Welt. Wer ahnte damals, dass mit ihm ein musikalisches Genie geboren wurde, dessen Musik heute in aller Welt bekannt ist? Bis 1792 lebte Beethoven in Bonn, bevor er nach Wien ging und zu einem der berühmtesten Komponisten der Welt wurde. Es werden Orte und Plätze aufgesucht, wo der weltberühmte Komponist wirkte und die faszinierende Einblicke in das Alltagsleben dieses großen Bonners ermöglichen. Datum:
+01.12. bis 31.12., Ort: Touristeninformation</p>
+  <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 7 -->
+<div class="question" data-correct="7">
+<h3>Text 6 Radtour am Rhein
+Hinweis: Diese Tour ist nur von Gruppen auf Anfrage buchbar! Die Fahrräder sind mitzubringen. Die Tour wird vom ADFC angeboten und verläuft am Rhein, einem der geschichtsträchtigsten Flüsse der Welt. Er symbolisiert wie für viele Rheinanwohner auch für Bonn über Jahrhunderte hinweg bis auf den heutigen Tag die Lebensader der Stadt. Entlang des linksrheinischen Rheinufers sprechen die steinernen Zeitzeugen der Bonner Geschichte für sich, wobei auch die zukunftsweisenden Aspekte der Stadt nicht zu kurz kommen. Datum: 01.02. bis 31.12, Ort und Uhrzeit: nach Vereinbarung</p>
+
+ <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 8 -->
+<!-- Text 7 -->
+<div class="question" data-correct="0">
+<h3>Text 7:Weihnachtsmarkt in Koblenz
+Über 100 festlich geschmückte Holzhäuschen, der Duft von Lebkuchen und Glühwein liegt in der Luft, Weihnachtsmelodien erklingen im malerischen Ambiente der historischen Altstadt unweit der Einkaufsstraßen: Das ist der Koblenzer Weihnachtsmarkt 2007. Alles, was das Herz in der Weihnachtszeit begehrte, findet sich hier wieder, denn auch in diesem Jahr warten wieder ein umfangreiches Angebot an Kunsthandwerk und Weihnachtsschmuck und eine riesige Auswahl an Geschenkartikeln auf die Besucher. Abgerundet durch Weihnachtsbäckerei und viele Attraktionen, wird der Besuch auf dem Koblenzer Weihnachtsmarkt zu einem Erlebnis, das Sie sich nicht entgehen lassen sollen. Datum: 23.11. - 23.12., Ort:
+Fußgängerzone im Zentrum</p>
+
+   <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 9 -->
+<div class="question" data-correct="9">
+<h3>Text 8:Drei Flöhe und das Jesuskind
+Im Jahr 1 machten sich drei Flöhe aus Deutschland auf den Weg nach Israel, um einmal so richtig zu entspannen. Leider war zu diesem Zeitpunkt eine Volkszählung im vollen Gange und die einzige Übernachtungsmöglichkeit fanden sie in einem Stall bei Bethlehem. Dass sie diese Unterkunft auch noch mit einem kleinen Kind teilen müssten, damit rechnete keiner der drei Flöhe.
+Und dass dieses Kind auch noch eine Berühmtheit war, machte die ganze Sache für die drei Flöhe zu einem aufregenden Abenteuer. Dieses neue
+Kinderstück aus der Feder von Dirk Zimmer erzählt die Weihnachtsgeschichte auf humorvolle und gefühlvolle Weise aus der Sicht der drei Flöhen. Datum: 26.11. - 22.12., Uhrzeit: jeweils, 15.00 Uhr, Ort:
+Innenhof des Rathauses, Alter: ab 5 Jahre</p>
+
+ <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+<!-- Question 9 -->
+<div class="question" data-correct="4">
+<h3>Text 9:Weihnachtsshow
+"Stille Nacht" trifft "Last Christmas", Gospel umarmt Soul, und Pop küsst Klassik. Als 1997 die Idee entstand, eine Weihnachtsshow zu entwickeln, die die schönsten Weihnachtslieder aller Zeiten und aller Genre in sich vereint, konnte sich keiner so recht vorstellen, dass diese Show einmal zur erfolgreichsten Weihnachtsshow Deutschlands avancieren würde. Seit zehn Jahren begeistert nun die Band "Christmast Moments" von Thomas Schwab & Band das Publikum sowohl in den großen Konzerthallen der Republik (unter anderem Arena Trier, Phönixhalle Mainz) als auch vor den Fernsehern (ARD- Ausstrahlungen seit 2004). "Christmas Moments" trifft mitten ins Herz und konnte in den letzten Jahren mehr als 500.000 Zuschauer begeistern. Datum: 11.12., Uhrzeit: 20.00 Uhr, Ort: Rhein-Mosel-Halle</p>
+
+ <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 9 -->
+<div class="question" data-correct="2">
+<h3>Text 10:Lasse Lindgren Ensemble
+Jazz vom Feinsten mit durchaus gewollten konservativen Zügen. Der Trompeter Lasse Lindgren ist einer der innovativen Spitzen-Trompeter der aktuellen Jazzszene in Schweden, der in vielen internationalen Bigbands und zusammen mit anderen berühmten Jazzmusikern gespielt hat. Von der Tageszeitung "Svenska Dagbladet" wurde er als "einer der kompetentesten Trompetenspieler dieses Landes" bezeichnet und Randy Brecker schrieb: "Es ist so erfrischend, etwas zu hören, was wirklich originell ist! Lass Lindgren, Du bist ein wundervoller Spieler und Komponist". Sein neuestes Projekt ist ein Glaubensbekenntnis an die Kraft und Energie des Jazz mit eigener Handschrift: Lasse Lindgren hat eine virtuose, immer transparente Hingabe zu seinem Instrument. Datum: 1.1., Uhrzeit : 19.00 Uhr, Ort: Irish Pub im Stadtzenrtum</p>
+
+   <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+
+<!-- Question 10 -->
+<div class="question" data-correct="10">
+<h3>Text 11:10 Jahre FÜR DIE KATZ
+Unglaublich! 10 Jahre ist es bereits her, seit FÜR DIE KATZ wie ein Faustschlag ins Licht der Öffentlichkeit traten und sich binnen kürzester Zeit in die Spitzenriege der deutschen Komiker katapultierten. Heute befinden sich die beiden mit Preisen überhäuften Weltbürger Benno Rex und Karl Salzburger auf dem vorläufigen Höhepunkt ihrer eindrucksvollen Karriere und gelten als die vielseitigsten, kreativsten und für Presse wie Fans schlichtweg lustigsten Komödianten Deutschlands. Ihre Wortschöpfungen und Charaktere erweisen sich immer wieder als richtungsweisende Leitsterne für die gesamte Comedy-Branche. Datum: 5.1., Uhrzeit: 20.00 Uhr, Ort: Haus des Kabaretts</p>
+
+   <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- Question 12 -->
+<div class="question" data-correct="0">
+<h3>Text 12: Weihnachtsvarieté im Café Spitz
+Das Weihnachtsvarieté erwartet Sie auch in diesem Jahr mit atemberaubender Akrobatik, traumhafter Jonglage, ergänzt von Livemusikern. Seien Sie dabei und staunen Sie vielleicht mit ihrer Familie, mit ihren Lieblingskollegen oder der ganzen Firma oder einfach nur mit ihrem oder Ihrer Liebsten. Karl-Heinz Helmschrot hat auch in diesem Jahr wieder eine faszinierende Gruppe von sehr unterschiedlichen Künstlern zusammengestellt. Zum 10-jährigen Jubiläum - 10 Künstler! Nicht zuständig ist er für Ihr leibliches Wohl! Dafür haben die Köche des Café Spitz wieder eine internationale Karte zusammengestellt, also freuen Sie sich auf Köstlichkeiten aus aller Welt. Datum: 9.12., Uhrzeit: 21.00 Uhr, Ort: Café Spitz</p>
+
+  <label><input type="radio" name="q1" value="0"> Keine Antwort</label>
+  <label><input type="radio" name="q1" value="1"> Ihre Schwester interessiert sich für die Biographien großer Musiker</label>
+  <label><input type="radio" name="q1" value="2">   Sie leben Auftritte von herausragenden Musik.</label>
+  <label><input type="radio" name="q1" value="3">   Sie lieben künstlerische Vielfalt und Vielseitigkeit und wollen Weihnachten ausgehen.</label>
+  <label><input type="radio" name="q1" value="4"> Sie möchten alte und neue Weihnachtslieder hören.</label>
+  <label><input type="radio" name="q1" value="5">Sie möchten mit Ihrer zwölfjährigen Tochter ein altersgerechtes Theaterstück sehen.</label>
+  <label><input type="radio" name="q1" value="6"> Sie suchen einen Kinderfilm für ihren kleinen Sohn.</label>
+  <label><input type="radio" name="q1" value="7">Sie suchen für sportliche Sprachkursteilnehmer eine Möglichkeit, Bonn zu zeigen.</label>
+  <label><input type="radio" name="q1" value="8"> Sie wollen ihrem Freund, der Tanztheater liebt, eine Eintrittskarte zum Geburtstag schenken.</label>
+  <label><input type="radio" name="q1" value="9">   Sie wollen mit ihren Kindern eine etwas andere, eher lustige Seite von Weihnachten erleben.</label>
+  <label><input type="radio" name="q1" value="10">Sie wollen mit Bekannten ausgehen um mal wieder so richtig lachen.</label>
+</div>
+
+<!-- باقي الصفحة كاملة -->
+
+<button id="checkAnswers">Ergebnisse anzeigen</button>
+
+<script>
+document.getElementById("checkAnswers").addEventListener("click", function() {
+  const questions = document.querySelectorAll(".question");
+
+  questions.forEach(q => {
+    const correctValue = q.dataset.correct;
+    const inputs = q.querySelectorAll("input[type='radio']");
+
+    inputs.forEach(input => {
+      const label = input.parentElement;
+      label.style.backgroundColor = ""; // نحيد أي لون قديم
+
+      // ✅ إذا الجواب هو الصحيح، نوليه أخضر (سواء اختار المستخدم أو لا)
+      if (input.value === correctValue) {
+        label.style.backgroundColor = "lightgreen";
+      }
+
+      // ❌ إذا المستخدم اختار جواب خاطئ، نوليه أحمر
+      if (input.checked && input.value !== correctValue) {
+        label.style.backgroundColor = "lightcoral";
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
